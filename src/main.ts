@@ -11,17 +11,37 @@ app.append(header);
 
 //Used generative AI for start
 const button = document.createElement("button");
+let counter = 0;
+
+const counterDiv = document.createElement("div");
+counterDiv.textContent = `${counter} smiles`;
+counterDiv.style.position = "absolute";
+counterDiv.style.top = "90%";
+counterDiv.style.left = "47%";
+counterDiv.style.transform = "translate(-50%, -50%)";
+counterDiv.style.fontSize = "20px";
+counterDiv.style.margin = "20px";
+counterDiv.style.textAlign = "center";
+
+
+document.body.appendChild(counterDiv);
+
 
 button.textContent = "😀";
 button.addEventListener("click", () => {
-    alert("Button clicked");
+    //alert("Button clicked");
+    counter++;
+    counterDiv.textContent = `${counter} smiles`;
 })
 
+
+//Changes positioning
 button.style.position = "absolute";
-button.style.top = "70%";
+button.style.top = "60%";
 button.style.left = "50%";
 button.style.transform = "translate(-50%, -50%)";
 button.style.padding = "10px 20px"; // Optional: make the button look better
 button.style.fontSize = "16px"; // Optional: adjust font size
 
+//Adds the button to the body (or any other element)
 document.body.appendChild(button);
