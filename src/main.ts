@@ -13,6 +13,7 @@ app.append(header);
 const button = document.createElement("button");
 let counter = 0;
 
+
 const counterDiv = document.createElement("div");
 counterDiv.textContent = `${counter} smiles`;
 counterDiv.style.position = "absolute";
@@ -23,16 +24,30 @@ counterDiv.style.fontSize = "20px";
 counterDiv.style.margin = "20px";
 counterDiv.style.textAlign = "center";
 
-
 document.body.appendChild(counterDiv);
 
+let clicked = false;
 
 button.textContent = "😀";
 button.addEventListener("click", () => {
-    //alert("Button clicked");
-    counter++;
-    counterDiv.textContent = `${counter} smiles`;
-})
+  //alert("Button clicked");
+  counter++;
+  counterDiv.textContent = `${counter} smiles`;
+  clicked = true;
+
+});
+//https://i.sstatic.net/8Dy2H.png
+//let testTimer: number
+
+  setInterval(()=>{
+    if(clicked == false){
+      counter++;
+      counterDiv.textContent = `${counter} smiles`;
+    }
+    else{
+      clicked = false;
+    }
+  }, 1000);
 
 
 //Changes positioning
