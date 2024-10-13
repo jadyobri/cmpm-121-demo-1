@@ -5,17 +5,19 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const gameName = "Clicking Combo";
 document.title = gameName;
 
-
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
+
+let increase1 = 10;
+let increase2 = 100;
+let increase3 = 1000;
+
 
 //Used generative AI for start
 const button = document.createElement("button");
 let counter = 0;
 let increaseSpeed = 0;
-
-
 
 const counterDiv = document.createElement("div");
 counterDiv.textContent = `${counter} smiles`;
@@ -42,7 +44,7 @@ let upgrade1 = 0;
 upgradefirst.textContent = `${upgrade1} 😄`;
 upgradefirst.style.position = "absolute";
 upgradefirst.style.top = "68%";
-upgradefirst.style.left = "63%";
+upgradefirst.style.left = "69%";
 upgradefirst.style.transform = "translate(-50%, -50%)";
 upgradefirst.style.fontSize = "20px";
 upgradefirst.style.margin = "20px";
@@ -53,7 +55,7 @@ let upgrade2 = 0;
 upgradesecond.textContent = `${upgrade2} 😁`;
 upgradesecond.style.position = "absolute";
 upgradesecond.style.top = "75%";
-upgradesecond.style.left = "63%";
+upgradesecond.style.left = "69%";
 upgradesecond.style.transform = "translate(-50%, -50%)";
 upgradesecond.style.fontSize = "20px";
 upgradesecond.style.margin = "20px";
@@ -64,7 +66,7 @@ let upgrade3 = 0;
 upgradethird.textContent = `${upgrade3} 😂`;
 upgradethird.style.position = "absolute";
 upgradethird.style.top = "85%";
-upgradethird.style.left = "63%";
+upgradethird.style.left = "69%";
 upgradethird.style.transform = "translate(-50%, -50%)";
 upgradethird.style.fontSize = "20px";
 upgradethird.style.margin = "20px";
@@ -101,22 +103,24 @@ const upgradeButton = document.createElement("button");
 //Count of how much of each type have been purchased.
 //Names of upgrades: standard, silver, gold.
 // Set the upgrade button text
-upgradeButton.textContent = "Buy Upgrade (+0.1 growth rate) - Cost: 10 smiles";
+upgradeButton.textContent = "Buy Upgrade (+0.1 growth rate) - Cost: " +increase1 +  " smiles";
 // Initially disable the upgrade button
 upgradeButton.disabled = true;
 // Add an event listener to handle upgrading when clicked
 upgradeButton.addEventListener("click", () => {
-  if (counter >= 10) {
-    counter -= 10; // Deduct 10 cookies
-    increaseSpeed += .1; // Increase the growth rate by 1 unit per second
-    upgrade1 +=1;
-    
+  if (counter >= increase1) {
+    counter -= increase1; // Deduct 10 cookies
+    increaseSpeed += 0.1; // Increase the growth rate by 1 unit per second
+    upgrade1 += 1;
+
     upgradefirst.textContent = `${upgrade1} 😄`;
     updateCounter();
     speedCount.textContent = `${increaseSpeed} smilerate`;
     checkUpgradeAvailability();
     checkUpgradeAvailability2();
     checkUpgradeAvailability3();
+    increase1 *= 1.15;
+    upgradeButton.textContent = "Buy Upgrade (+0.1 growth rate) - Cost: " +increase1 +  " smiles";
   }
 });
 // Apply CSS to the upgrade button
@@ -135,15 +139,15 @@ const upgradeButton1 = document.createElement("button");
 //Count of how much of each type have been purchased.
 //Names of upgrades: standard, silver, gold.
 // Set the upgrade button text
-upgradeButton1.textContent = "Buy Upgrade (+2 growth rate) - Cost: 100 smiles";
+upgradeButton1.textContent = "Buy Upgrade (+2 growth rate) - Cost: "+increase2+ " smiles";
 // Initially disable the upgrade button
 upgradeButton1.disabled = true;
 // Add an event listener to handle upgrading when clicked
 upgradeButton1.addEventListener("click", () => {
-  if (counter >= 100) {
-    counter -= 100; // Deduct 10 cookies
+  if (counter >= increase2) {
+    counter -= increase2; // Deduct 10 cookies
     increaseSpeed += 2; // Increase the growth rate by 1 unit per second
-    upgrade2+=1;
+    upgrade2 += 1;
     upgradesecond.textContent = `${upgrade2} 😁`;
     speedCount.textContent = `${increaseSpeed} smilerate`;
     updateCounter();
@@ -151,6 +155,8 @@ upgradeButton1.addEventListener("click", () => {
     checkUpgradeAvailability();
     checkUpgradeAvailability2();
     checkUpgradeAvailability3();
+    increase2 *= 1.15;
+    upgradeButton1.textContent = "Buy Upgrade (+2 growth rate) - Cost: "+increase2+ " smiles";
   }
 });
 // Apply CSS to the upgrade button
@@ -163,20 +169,20 @@ upgradeButton1.style.top = "78%";
 upgradeButton1.style.left = "50%";
 upgradeButton1.style.transform = "translate(-50%, -50%)";
 
-
 const upgradeButton2 = document.createElement("button");
 //Notes, make 3 upgrade buttons, each one increases amount by certain increment.
 //Show a current growth rate
 //Count of how much of each type have been purchased.
 //Names of upgrades: standard, silver, gold.
 // Set the upgrade button text
-upgradeButton2.textContent = "Buy Upgrade (+50 growth rate) - Cost: 1000 smiles";
+upgradeButton2.textContent =
+'Buy Upgrade (+50 growth rate) - Cost: '+increase3+' smiles';
 // Initially disable the upgrade button
 upgradeButton2.disabled = true;
 // Add an event listener to handle upgrading when clicked
 upgradeButton2.addEventListener("click", () => {
-  if (counter >= 100) {
-    counter -= 100; // Deduct 10 cookies
+  if (counter >= increase3) {
+    counter -= increase3; // Deduct 10 cookies
     increaseSpeed += 50; // Increase the growth rate by 1 unit per second
     updateCounter();
     upgrade3++;
@@ -185,6 +191,9 @@ upgradeButton2.addEventListener("click", () => {
     checkUpgradeAvailability();
     checkUpgradeAvailability2();
     checkUpgradeAvailability3();
+    increase3 *= 1.15;
+    upgradeButton2.textContent =
+  'Buy Upgrade (+50 growth rate) - Cost: '+increase3+' smiles';
   }
 });
 // Apply CSS to the upgrade button
@@ -197,17 +206,15 @@ upgradeButton2.style.top = "85%";
 upgradeButton2.style.left = "50%";
 upgradeButton2.style.transform = "translate(-50%, -50%)";
 
-
-
 function checkUpgradeAvailability() {
-  if (counter >= 10) {
+  if (counter >= increase1) {
     upgradeButton.disabled = false;
   } else {
     upgradeButton.disabled = true;
   }
 }
 function checkUpgradeAvailability2() {
-  if (counter >= 100) {
+  if (counter >= increase2) {
     upgradeButton1.disabled = false;
   } else {
     upgradeButton1.disabled = true;
@@ -215,7 +222,7 @@ function checkUpgradeAvailability2() {
 }
 
 function checkUpgradeAvailability3() {
-  if (counter >= 1000) {
+  if (counter >= increase3) {
     upgradeButton2.disabled = false;
   } else {
     upgradeButton2.disabled = true;
