@@ -7,6 +7,11 @@ document.title = gameName;
 
 const header = document.createElement("h1");
 header.innerHTML = gameName;
+header.style.position = "absolute";
+header.style.top = "10%";
+header.style.left = "50%";
+header.style.transform = "translate(-50%, -50%)";
+header.style.textAlign = "center";
 app.append(header);
 
 //let increase1 = 10;
@@ -19,23 +24,25 @@ let counter = 0;
 let increaseSpeed = 0;
 //let distance = 0;
 interface Item {
-  name: string,
-  cost: number,
-  rate: number,
-  amount: number
-};
+  name: string;
+  cost: number;
+  rate: number;
+  amount: number;
+}
 
-const availableItems : Item[] = [
-  {name: "😄", cost: 10, rate: 0.1, amount: 0},
-  {name: "😁", cost: 100, rate: 2, amount: 0 },
-  {name: "😂", cost: 1000, rate: 50, amount: 0},
+const availableItems: Item[] = [
+  { name: "😄", cost: 10, rate: 0.1, amount: 0 },
+  { name: "😁", cost: 100, rate: 2, amount: 0 },
+  { name: "😂", cost: 1000, rate: 50, amount: 0 },
+  { name: "😝", cost: 2000, rate: 2, amount: 0 },
+  { name: "😎", cost: 10000, rate: 4, amount: 0 }
 ];
 
 const counterDiv = document.createElement("div");
 counterDiv.textContent = `${counter} 😀`;
 counterDiv.style.position = "absolute";
 counterDiv.style.top = "90%";
-counterDiv.style.left = "47%";
+counterDiv.style.left = "50%";
 counterDiv.style.transform = "translate(-50%, -50%)";
 counterDiv.style.fontSize = "20px";
 counterDiv.style.margin = "20px";
@@ -45,13 +52,13 @@ const speedCount = document.createElement("div");
 speedCount.textContent = `${increaseSpeed} 😀/second`;
 speedCount.style.position = "absolute";
 speedCount.style.top = "30%";
-speedCount.style.left = "47%";
+speedCount.style.left = "50%";
 speedCount.style.transform = "translate(-50%, -50%)";
 speedCount.style.fontSize = "20px";
 speedCount.style.margin = "20px";
 speedCount.style.textAlign = "center";
 
- const upgradefirst = document.createElement("div");
+const upgradefirst = document.createElement("div");
 //let upgrade1 = 0;
 upgradefirst.textContent = `0 😄`;
 upgradefirst.style.position = "absolute";
@@ -84,11 +91,35 @@ upgradethird.style.fontSize = "20px";
 upgradethird.style.margin = "20px";
 upgradethird.style.textAlign = "center";
 
- document.body.appendChild(counterDiv);
+const upgradefourth = document.createElement("div");
+//let upgrade3 = 0;
+upgradefourth.textContent = `0 😝`;
+upgradefourth.style.position = "absolute";
+upgradefourth.style.top = "15%";
+upgradefourth.style.left = "93%";
+upgradefourth.style.transform = "translate(-50%, -50%)";
+upgradefourth.style.fontSize = "20px";
+upgradefourth.style.margin = "20px";
+upgradefourth.style.textAlign = "center";
+
+const upgradefifth = document.createElement("div");
+//let upgrade3 = 0;
+upgradefifth.textContent = `0 😎`;
+upgradefifth.style.position = "absolute";
+upgradefifth.style.top = "19%";
+upgradefifth.style.left = "93%";
+upgradefifth.style.transform = "translate(-50%, -50%)";
+upgradefifth.style.fontSize = "20px";
+upgradefifth.style.margin = "20px";
+upgradefifth.style.textAlign = "center";
+
+document.body.appendChild(counterDiv);
 document.body.appendChild(upgradefirst);
 document.body.appendChild(upgradesecond);
 document.body.appendChild(upgradethird);
- document.body.appendChild(speedCount);
+document.body.appendChild(upgradefourth);
+document.body.appendChild(upgradefifth);
+document.body.appendChild(speedCount);
 function updateCounter() {
   counterDiv.textContent = `${counter} 😀`;
 }
@@ -97,6 +128,10 @@ function updateCounter() {
 //button.textContent = "😀";
 button.style.backgroundImage = "url('https://emojicdn.elk.sh/%F0%9F%98%83')";
 button.style.backgroundSize = "cover";
+button.style.position = "absolute";
+// button.style.top = "15%";
+// button.style.left = "93%";
+// button.style.transform = "translate(-50%, -50%)";
 button.style.backgroundPosition = "center";
 button.style.width = "75px";
 button.style.height = "75px";
@@ -109,7 +144,7 @@ button.style.textAlign = "center";
 button.style.cursor = "pointer";
 button.style.margin = "20px auto";
 button.style.display = "block";
-button.style.padding = "0"; 
+button.style.padding = "0";
 button.addEventListener("click", () => {
   //alert("Button clicked");
   counter++;
@@ -123,10 +158,18 @@ button.addEventListener("click", () => {
   //increaseAvailability();
 });
 function updateButtonLabel(button: HTMLButtonElement, item: Item) {
-  button.textContent = `${item.name} (+${item.rate} growth) - ${item.cost.toFixed(
-    2
+  if(item.name != "😝" && item.name != "😎"){
+  button.textContent = `${item.name} (+${item.rate} rate) - ${item.cost.toFixed(
+    2,
   )} smiles`;
+  }
+  else{
+    button.textContent = `${item.name} (${item.rate} x 😀/second) - ${item.cost.toFixed(
+      2,
+    )} smiles`;
+  }
 }
+
 function createUpgradeButtons() {
   availableItems.forEach((item) => {
     // const itemContainer = document.createElement("div");
@@ -137,19 +180,27 @@ function createUpgradeButtons() {
     //  itemContainer.style.width = "200px"; // Set a fixed width to avoid any wrapping issues
     //  itemContainer.style.margin = "0 auto"; // Center the container itself
     // itemContainer.style.border = "1px solid #ddd";
-     // itemContainer.style.flexDirection = "column"; // Stack items vertically
+    // itemContainer.style.flexDirection = "column"; // Stack items vertically
     // itemContainer.style.alignItems = "center"; // Center-align the content
     //itemContainer.style.display = "flex"; // Flexbox layout for vertical stacking
     //itemContainer.style.flexDirection = "column"; // Stack elements vertically
     //itemContainer.style.alignItems = "center";
-    
+
     const upgradeButton = document.createElement("button");
-    upgradeButton.textContent = `${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
+    if(item.name != "😝" && item.name != "😎"){
+      upgradeButton.textContent = `${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
+    }
+    else if (item.name == "😝"){
+      upgradeButton.textContent = `${item.name} (2 x 😀/second) - ${item.cost} 😀`;
+    }
+    else if (item.name == "😎"){
+      upgradeButton.textContent = `${item.name} (4 x 😀/second) - ${item.cost} 😀`;
+    }
     upgradeButton.style.display = "block";
     upgradeButton.style.margin = "10px auto";
     upgradeButton.style.padding = "10px 20px";
     upgradeButton.style.fontSize = "16px";
-  //  upgradeButton.style.width = "100%";
+    //  upgradeButton.style.width = "100%";
     upgradeButton.disabled = true;
 
     // const amountDiv = document.createElement("div");
@@ -182,18 +233,27 @@ function createUpgradeButtons() {
     upgradeButton.addEventListener("click", () => {
       if (counter >= item.cost) {
         counter -= item.cost;
-        item.cost*=1.15;
-        increaseSpeed += item.rate;
+        item.cost *= 1.15;
+        if(item.name == "😝" || item.name == "😎"){
+          increaseSpeed *= item.rate;
+        }
+        else{
+          increaseSpeed += item.rate;
+        }
         speedCount.textContent = `${increaseSpeed} 😀/second`;
         item.amount++;
-        if(item.name == "😄"){
+        if (item.name == "😄") {
           upgradefirst.textContent = `${item.amount} 😄`;
-        }
-        else if(item.name == "😂"){
+        } else if (item.name == "😂") {
           upgradethird.textContent = `${item.amount} 😂`;
-        }
-        else if(item.name =="😁"){
+        } else if (item.name == "😁") {
           upgradesecond.textContent = `${item.amount} 😁`;
+        }
+        else if (item.name == "😝"){
+          upgradefourth.textContent = `${item.amount} 😝`;
+        }
+        else if (item.name == "😎"){
+          upgradefifth.textContent = `${item.amount} 😎`;
         }
         //upgradeCount.textContent = ''+item.name + ' ' + item.amount;
         updateCounter();
@@ -202,9 +262,9 @@ function createUpgradeButtons() {
       }
       //itemContainer.appendChild(upgradeButton);
       //itemContainer.appendChild(upgradeCount);
-     // document.body.appendChild(itemContainer);
+      // document.body.appendChild(itemContainer);
 
-    // Store reference to the button for later updates
+      // Store reference to the button for later updates
       itemButtonMap.set(item.name, upgradeButton);
     });
 
@@ -277,7 +337,7 @@ const itemButtonMap = new Map<string, HTMLButtonElement>();
 //Names of upgrades: standard, silver, gold.
 // Set the upgrade button text
 //upgradeButton1.textContent =
-  //"😁 (+2 😀 rate) - Cost: " + increase2 + " 😀";
+//"😁 (+2 😀 rate) - Cost: " + increase2 + " 😀";
 // Initially disable the upgrade button
 // upgradeButton1.disabled = true;
 // // Add an event listener to handle upgrading when clicked
