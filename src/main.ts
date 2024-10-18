@@ -28,14 +28,15 @@ interface Item {
   cost: number;
   rate: number;
   amount: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "😄", cost: 10, rate: 0.1, amount: 0 },
-  { name: "😁", cost: 100, rate: 2, amount: 0 },
-  { name: "😂", cost: 1000, rate: 50, amount: 0 },
-  { name: "😝", cost: 2000, rate: 2, amount: 0 },
-  { name: "😎", cost: 10000, rate: 4, amount: 0 }
+  { name: "😄", cost: 10, rate: 0.1, amount: 0, description: "Happy"},
+  { name: "😁", cost: 100, rate: 2, amount: 0, description: "Very Happy"},
+  { name: "😂", cost: 1000, rate: 50, amount: 0, description: "Laugh my ... off"},
+  { name: "😝", cost: 2000, rate: 2, amount: 0, description: "Goofy" },
+  { name: "😎", cost: 10000, rate: 4, amount: 0, description: "Too Cool" },
 ];
 
 const counterDiv = document.createElement("div");
@@ -158,43 +159,35 @@ button.addEventListener("click", () => {
   //increaseAvailability();
 });
 function updateButtonLabel(button: HTMLButtonElement, item: Item) {
-  if(item.name != "😝" && item.name != "😎"){
-  button.textContent = `${item.name} (+${item.rate} rate) - ${item.cost.toFixed(
-    2,
-  )} smiles`;
-  }
-  else{
-    button.textContent = `${item.name} (${item.rate} x 😀/second) - ${item.cost.toFixed(
+  if (item.name != "😝" && item.name != "😎") {
+    button.textContent = `${item.description}, ${item.name} (+${item.rate} rate) - ${item.cost.toFixed(
       2,
-    )} smiles`;
+    )} 😀`;
+  } else {
+    button.textContent = `${item.description}, ${item.name} (${item.rate} x 😀/second) - ${item.cost.toFixed(
+      2,
+    )} 😀`;
   }
 }
 
 function createUpgradeButtons() {
   availableItems.forEach((item) => {
-    // const itemContainer = document.createElement("div");
-    // itemContainer.style.position = "absolute0";
-    // itemContainer.style.textAlign = "center"; // Center the button and amount div
-    //  itemContainer.style.marginBottom = "20px"; // Add space between different items
-    //  //itemContainer.style.display = "block"; // Use flexbox
-    //  itemContainer.style.width = "200px"; // Set a fixed width to avoid any wrapping issues
-    //  itemContainer.style.margin = "0 auto"; // Center the container itself
-    // itemContainer.style.border = "1px solid #ddd";
-    // itemContainer.style.flexDirection = "column"; // Stack items vertically
-    // itemContainer.style.alignItems = "center"; // Center-align the content
-    //itemContainer.style.display = "flex"; // Flexbox layout for vertical stacking
-    //itemContainer.style.flexDirection = "column"; // Stack elements vertically
-    //itemContainer.style.alignItems = "center";
-
+    const itemContainer = document.createElement("div");
+    itemContainer.style.position = "relative"; // Relative positioning for absolute placement of the counter
+    itemContainer.style.textAlign = "center"; // Center the button in the container
+    itemContainer.style.marginBottom = "20px"; // Add space between different items
+    itemContainer.style.width = "250px"; // Set a fixed width for the container
+    itemContainer.style.margin = "0 auto"; // Center the container
+    itemContainer.style.border = "1px solid #ddd"; // Add border around the container
+    
+    
     const upgradeButton = document.createElement("button");
-    if(item.name != "😝" && item.name != "😎"){
-      upgradeButton.textContent = `${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
-    }
-    else if (item.name == "😝"){
-      upgradeButton.textContent = `${item.name} (2 x 😀/second) - ${item.cost} 😀`;
-    }
-    else if (item.name == "😎"){
-      upgradeButton.textContent = `${item.name} (4 x 😀/second) - ${item.cost} 😀`;
+    if (item.name != "😝" && item.name != "😎") {
+      upgradeButton.textContent = `${item.description}, ${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
+    } else if (item.name == "😝") {
+      upgradeButton.textContent = `${item.description}, ${item.name} (2 x 😀/second) - ${item.cost} 😀`;
+    } else if (item.name == "😎") {
+      upgradeButton.textContent = `${item.description}, ${item.name} (4 x 😀/second) - ${item.cost} 😀`;
     }
     upgradeButton.style.display = "block";
     upgradeButton.style.margin = "10px auto";
@@ -233,12 +226,20 @@ function createUpgradeButtons() {
     upgradeButton.addEventListener("click", () => {
       if (counter >= item.cost) {
         counter -= item.cost;
-        item.cost *= 1.15;
-        if(item.name == "😝" || item.name == "😎"){
+        // if(item.name != "😝" && item.name != "😎"){
+        //   item.cost *= 1.15;
+        // }
+        if (item.name == "😝" || item.name == "😎") {
           increaseSpeed *= item.rate;
-        }
-        else{
+          if(item.name == "😝"){
+            item.cost *= 10;
+          }
+          else{
+            item.cost *= 100;
+          }
+        } else {
           increaseSpeed += item.rate;
+          item.cost *= 1.15;
         }
         speedCount.textContent = `${increaseSpeed} 😀/second`;
         item.amount++;
@@ -248,11 +249,9 @@ function createUpgradeButtons() {
           upgradethird.textContent = `${item.amount} 😂`;
         } else if (item.name == "😁") {
           upgradesecond.textContent = `${item.amount} 😁`;
-        }
-        else if (item.name == "😝"){
+        } else if (item.name == "😝") {
           upgradefourth.textContent = `${item.amount} 😝`;
-        }
-        else if (item.name == "😎"){
+        } else if (item.name == "😎") {
           upgradefifth.textContent = `${item.amount} 😎`;
         }
         //upgradeCount.textContent = ''+item.name + ' ' + item.amount;
