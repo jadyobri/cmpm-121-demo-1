@@ -32,9 +32,15 @@ interface Item {
 }
 
 const availableItems: Item[] = [
-  { name: "😄", cost: 10, rate: 0.1, amount: 0, description: "Happy"},
-  { name: "😁", cost: 100, rate: 2, amount: 0, description: "Very Happy"},
-  { name: "😂", cost: 1000, rate: 50, amount: 0, description: "Laugh my ... off"},
+  { name: "😄", cost: 10, rate: 0.1, amount: 0, description: "Happy" },
+  { name: "😁", cost: 100, rate: 2, amount: 0, description: "Very Happy" },
+  {
+    name: "😂",
+    cost: 1000,
+    rate: 50,
+    amount: 0,
+    description: "Laugh my ... off",
+  },
   { name: "😝", cost: 2000, rate: 2, amount: 0, description: "Goofy" },
   { name: "😎", cost: 10000, rate: 4, amount: 0, description: "Too Cool" },
 ];
@@ -179,8 +185,7 @@ function createUpgradeButtons() {
     itemContainer.style.width = "250px"; // Set a fixed width for the container
     itemContainer.style.margin = "0 auto"; // Center the container
     itemContainer.style.border = "1px solid #ddd"; // Add border around the container
-    
-    
+
     const upgradeButton = document.createElement("button");
     if (item.name != "😝" && item.name != "😎") {
       upgradeButton.textContent = `${item.description}, ${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
@@ -231,10 +236,9 @@ function createUpgradeButtons() {
         // }
         if (item.name == "😝" || item.name == "😎") {
           increaseSpeed *= item.rate;
-          if(item.name == "😝"){
+          if (item.name == "😝") {
             item.cost *= 10;
-          }
-          else{
+          } else {
             item.cost *= 100;
           }
         } else {
