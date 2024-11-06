@@ -243,18 +243,14 @@ function createUpgradeButtons() {
     if (item.name != "😝" && item.name != "😎") {
       upgradeButton.textContent = `${item.description}, ${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
       upgradeButton.title = "rate increases by: " + item.rate;
-
-    }
-    else{ 
-      upgradeButton.title = "rate is multiplied by " +item.rate;
+    } else {
+      upgradeButton.title = "rate is multiplied by " + item.rate;
       if (item.name == "😝") {
         upgradeButton.textContent = `${item.description}, ${item.name} (2 x 😀/second) - ${item.cost} 😀`;
-
       } else if (item.name == "😎") {
         upgradeButton.textContent = `${item.description}, ${item.name} (4 x 😀/second) - ${item.cost} 😀`;
-
       }
-  }
+    }
     upgradeButton.style.display = "block";
     upgradeButton.style.margin = "10px auto";
     upgradeButton.style.padding = "10px 20px";
@@ -266,7 +262,7 @@ function createUpgradeButtons() {
     upgradeButton.disabled = true;
 
     //adds description for buttons when hovering over them
-      //upgradeButton.title = "rate increases by: " + item.rate;
+    //upgradeButton.title = "rate increases by: " + item.rate;
 
     // Add event listener for the upgrade button
     upgradeButton.addEventListener("click", () =>
