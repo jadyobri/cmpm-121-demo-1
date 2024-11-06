@@ -14,7 +14,6 @@ header.style.transform = "translate(-50%, -50%)";
 header.style.textAlign = "center";
 app.append(header);
 
-
 //Used generative AI for start
 // Initial game variables
 const button = document.createElement("button");
@@ -45,10 +44,21 @@ interface Item {
   buttonElement?: HTMLButtonElement;
 }
 
-
 const availableItems: Item[] = [
-  { name: "😄", cost: INITIAL_COST_SMALL_SMILE, rate: INITIAL_RATES.small, amount: 0, description: "Happy" },
-  { name: "😁", cost: INITIAL_COST_VERY_HAPPY, rate: INITIAL_RATES.medium, amount: 0, description: "Very Happy" },
+  {
+    name: "😄",
+    cost: INITIAL_COST_SMALL_SMILE,
+    rate: INITIAL_RATES.small,
+    amount: 0,
+    description: "Happy",
+  },
+  {
+    name: "😁",
+    cost: INITIAL_COST_VERY_HAPPY,
+    rate: INITIAL_RATES.medium,
+    amount: 0,
+    description: "Very Happy",
+  },
   {
     name: "😂",
     cost: INITIAL_COST_LAUGH,
@@ -56,8 +66,20 @@ const availableItems: Item[] = [
     amount: 0,
     description: "Laugh my ... off",
   },
-  { name: "😝", cost: INITIAL_COST_GOOFY, rate: INITIAL_RATES.xlarge, amount: 0, description: "Goofy" },
-  { name: "😎", cost: INITIAL_COST_COOL, rate: INITIAL_RATES.xxlarge, amount: 0, description: "Too Cool" },
+  {
+    name: "😝",
+    cost: INITIAL_COST_GOOFY,
+    rate: INITIAL_RATES.xlarge,
+    amount: 0,
+    description: "Goofy",
+  },
+  {
+    name: "😎",
+    cost: INITIAL_COST_COOL,
+    rate: INITIAL_RATES.xxlarge,
+    amount: 0,
+    description: "Too Cool",
+  },
 ];
 
 const counterDiv = document.createElement("div");
@@ -79,7 +101,6 @@ speedCount.style.transform = "translate(-50%, -50%)";
 speedCount.style.fontSize = "20px";
 speedCount.style.margin = "20px";
 speedCount.style.textAlign = "center";
-
 
 const upgradefirst = document.createElement("div");
 upgradefirst.textContent = `0 😄`;
@@ -174,9 +195,10 @@ function buyUpgrade(item: Item, button: HTMLButtonElement) {
     // Update item amount and cost
     item.amount++;
     item.cost = calculateNewCost(item.cost);
-    
+
     // Update UI displays
-    if (item.amountDisplay) item.amountDisplay.textContent = `${item.amount} ${item.name}`;
+    if (item.amountDisplay)
+      item.amountDisplay.textContent = `${item.amount} ${item.name}`;
     updateCounter();
     updateUpgradeButtons();
     updateButtonLabel(button, item);
@@ -203,12 +225,12 @@ function calculateNewCost(currentCost: number): number {
 
 //checks for which for item rate.
 function updateIncreaseSpeed(item: Item) {
-      if (item.name === "😝" || item.name === "😎") {
-        increaseSpeed *= item.rate;
-      } else {
-        increaseSpeed += item.rate;
-      }
-      speedCount.textContent = `${increaseSpeed.toFixed(1)} 😀/second`;
+  if (item.name === "😝" || item.name === "😎") {
+    increaseSpeed *= item.rate;
+  } else {
+    increaseSpeed += item.rate;
+  }
+  speedCount.textContent = `${increaseSpeed.toFixed(1)} 😀/second`;
 }
 
 //creates each upgrade button itself
@@ -233,13 +255,15 @@ function createUpgradeButtons() {
     upgradeButton.style.display = "block";
     upgradeButton.style.margin = "10px auto";
     upgradeButton.style.padding = "10px 20px";
+    upgradeButton.style.cursor = "pointer";
     upgradeButton.style.fontSize = "16px";
     upgradeButton.disabled = true;
 
-
-
+    upgradeButton.title = "rate increases by: " + item.rate;
     // Add event listener for the upgrade button
-    upgradeButton.addEventListener("click", () => buyUpgrade(item, upgradeButton));
+    upgradeButton.addEventListener("click", () =>
+      buyUpgrade(item, upgradeButton),
+    );
 
     // Append the upgrade button to the body
     document.body.appendChild(upgradeButton);
@@ -260,8 +284,6 @@ const itemButtonMap = new Map<string, HTMLButtonElement>();
 
 //https://i.sstatic.net/8Dy2H.png
 
-
-
 //Changes positioning
 button.style.position = "absolute";
 button.style.top = "60%";
@@ -273,13 +295,11 @@ button.style.fontSize = "16px"; // Optional: adjust font size
 //Adds the button to the body (or any other element)
 document.body.appendChild(button);
 
-
 // Initialize the game by creating upgrade buttons and setting up animations
 function initializeGame() {
   createUpgradeButtons();
   requestAnimationFrame(animate);
 }
-
 
 //Use of AI for assistance.
 let lastTime = 0;
