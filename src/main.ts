@@ -148,7 +148,7 @@ button.addEventListener("click", () => {
   updateUpgradeButtons();
 });
 
-//Buying upgrades0
+//Buying upgrades
 function buyUpgrade(item: Item, button: HTMLButtonElement) {
   if (counter >= item.cost) {
     // Deduct cost and increase speed
@@ -173,8 +173,6 @@ function buyUpgrade(item: Item, button: HTMLButtonElement) {
     updateCounter();
     updateUpgradeButtons();
     updateButtonLabel(button, item);
-
-    // Remove the animation class after the animation duration (e.g., 0.5s)
   }
 }
 
@@ -239,12 +237,13 @@ function createUpgradeButtons() {
     itemContainer.style.left = "-40%";
     itemContainer.style.transform = "translate(-50%, 0%)";
 
+    //checks for each button for multiple parts
     const upgradeButton = document.createElement("button");
     if (item.name != "😝" && item.name != "😎") {
       upgradeButton.textContent = `${item.description}, ${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
-      upgradeButton.title = "rate increases by: " + item.rate;
+      upgradeButton.title = "rate increases by: " + item.rate; //description of text when hovering
     } else {
-      upgradeButton.title = "rate is multiplied by " + item.rate;
+      upgradeButton.title = "rate is multiplied by " + item.rate; //description of text when hovering
       if (item.name == "😝") {
         upgradeButton.textContent = `${item.description}, ${item.name} (2 x 😀/second) - ${item.cost} 😀`;
       } else if (item.name == "😎") {
@@ -260,9 +259,6 @@ function createUpgradeButtons() {
 
     upgradeButton.style.fontSize = "16px";
     upgradeButton.disabled = true;
-
-    //adds description for buttons when hovering over them
-    //upgradeButton.title = "rate increases by: " + item.rate;
 
     // Add event listener for the upgrade button
     upgradeButton.addEventListener("click", () =>
@@ -285,6 +281,8 @@ function createUpgradeButtons() {
     itemButtonMap.set(item.name, upgradeButton);
   });
 }
+
+//enable/disable based on counter amount being lower or higher than threshold
 function updateUpgradeButtons() {
   availableItems.forEach((item) => {
     const butter = itemButtonMap.get(item.name);
@@ -294,8 +292,6 @@ function updateUpgradeButtons() {
   });
 }
 const itemButtonMap = new Map<string, HTMLButtonElement>();
-
-//https://i.sstatic.net/8Dy2H.png
 
 //Changes positioning
 button.style.position = "absolute";
