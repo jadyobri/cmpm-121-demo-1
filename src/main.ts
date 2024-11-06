@@ -2,7 +2,6 @@ import "./style.css";
 //found on https://icons8.com/icons/set/cursor--yellow
 import customCursor from "./cursors/CursorHand.png";
 
-
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Clicking Combo";
@@ -21,12 +20,16 @@ app.append(header);
 const button = document.createElement("button");
 let counter = 0;
 let increaseSpeed = 0;
+
+//magic numbers
 const INITIAL_COST_SMALL_SMILE = 10;
 const INITIAL_COST_VERY_HAPPY = 100;
 const INITIAL_COST_LAUGH = 1000;
 const INITIAL_COST_GOOFY = 2000;
 const INITIAL_COST_COOL = 10000;
 const COST_MULTIPLIER = 1.15;
+
+//rates in one area for each item
 const INITIAL_RATES = {
   small: 0.1,
   medium: 2,
@@ -46,6 +49,7 @@ interface Item {
   buttonElement?: HTMLButtonElement;
 }
 
+//storing items in list with each attribute
 const availableItems: Item[] = [
   {
     name: "😄",
@@ -84,21 +88,20 @@ const availableItems: Item[] = [
   },
 ];
 // Create a container for the smile counter and smiles per second display
- const smileContainer = document.createElement("div");
- smileContainer.style.display = "flex !important";
- console.log("Display property (smileContainer):", smileContainer.style.display);
- smileContainer.style.flexDirection = "column";
- smileContainer.style.alignItems = "center";
- smileContainer.style.justifyContent = "center";
- smileContainer.style.width = "300px";
- smileContainer.style.border = "2px solid #ddd";
- smileContainer.style.padding = "10px";
- smileContainer.style.margin = "20px auto";
- smileContainer.style.backgroundColor = "#f9f9f9";
- smileContainer.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.2)"; // Optional: add subtle shadow for depth
- smileContainer.style.top = "70%";
- smileContainer.style.left = "70%";
- smileContainer.style.transform = "translate(140%, 280%)";//used for positioning correctly
+const smileContainer = document.createElement("div");
+smileContainer.style.display = "flex !important";
+smileContainer.style.flexDirection = "column";
+smileContainer.style.alignItems = "center";
+smileContainer.style.justifyContent = "center";
+smileContainer.style.width = "300px";
+smileContainer.style.border = "2px solid #ddd";
+smileContainer.style.padding = "10px";
+smileContainer.style.margin = "20px auto";
+smileContainer.style.backgroundColor = "#f9f9f9";
+smileContainer.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.2)"; // Optional: add subtle shadow for depth
+smileContainer.style.top = "70%";
+smileContainer.style.left = "70%";
+smileContainer.style.transform = "translate(140%, 280%)"; //used for positioning correctly
 
 //Makes text for smiles count
 const counterDiv = document.createElement("div");
@@ -107,7 +110,7 @@ counterDiv.style.fontSize = "20px";
 counterDiv.style.marginBottom = "10px";
 counterDiv.style.textAlign = "center";
 counterDiv.style.display = "static";
-smileContainer.appendChild(counterDiv);//adds to container
+smileContainer.appendChild(counterDiv); //adds to container
 
 //Makes text for smiles per second
 const speedCount = document.createElement("div");
@@ -116,12 +119,9 @@ speedCount.style.fontSize = "18px";
 speedCount.style.textAlign = "center";
 speedCount.style.display = "static";
 
-
-smileContainer.appendChild(speedCount);//adds to container
-
+smileContainer.appendChild(speedCount); //adds to container
 
 app.appendChild(smileContainer);
-
 
 function updateCounter() {
   counterDiv.textContent = `${counter.toFixed(2)} 😀`;
@@ -159,26 +159,22 @@ function buyUpgrade(item: Item, button: HTMLButtonElement) {
     item.amount++;
     item.cost = calculateNewCost(item.cost);
 
-
     // Update UI displays
-    if (item.amountDisplay){
+    if (item.amountDisplay) {
       item.amountDisplay.textContent = `${item.amount} ${item.name}`;
       item.amountDisplay.classList.add("upgrade-increase");
 
       // Remove animation class after the animation duration to allow re-trigger
       setTimeout(() => {
-        if(item.amountDisplay) item.amountDisplay.classList.remove("upgrade-increase");
+        if (item.amountDisplay)
+          item.amountDisplay.classList.remove("upgrade-increase");
       }, 500); // Match the animation duration
-
     }
     updateCounter();
     updateUpgradeButtons();
     updateButtonLabel(button, item);
 
-
-
     // Remove the animation class after the animation duration (e.g., 0.5s)
-
   }
 }
 
@@ -210,7 +206,6 @@ function updateIncreaseSpeed(item: Item) {
   speedCount.textContent = `${increaseSpeed.toFixed(1)} 😀/second`;
 }
 
-
 // Create a fixed container for upgrade amounts in the top right
 const upgradeAmountsContainer = document.createElement("div");
 upgradeAmountsContainer.style.position = "fixed";
@@ -229,11 +224,9 @@ upgradeContainer.style.alignItems = "center";
 upgradeContainer.style.gap = "10px";
 app.appendChild(upgradeContainer);
 
-
 //creates each upgrade button itself
 function createUpgradeButtons() {
   availableItems.forEach((item) => {
-
     //make container to hold item data.
     const itemContainer = document.createElement("div");
     itemContainer.style.position = "relative"; // Relative positioning for absolute placement of the counter
@@ -246,21 +239,25 @@ function createUpgradeButtons() {
     itemContainer.style.left = "-40%";
     itemContainer.style.transform = "translate(-50%, 0%)";
 
-
-
     const upgradeButton = document.createElement("button");
     if (item.name != "😝" && item.name != "😎") {
       upgradeButton.textContent = `${item.description}, ${item.name} (+${item.rate} rate) - ${item.cost} 😀`;
-    } else if (item.name == "😝") {
-      upgradeButton.textContent = `${item.description}, ${item.name} (2 x 😀/second) - ${item.cost} 😀`;
-    } else if (item.name == "😎") {
-      upgradeButton.textContent = `${item.description}, ${item.name} (4 x 😀/second) - ${item.cost} 😀`;
+      upgradeButton.title = "rate increases by: " + item.rate;
+
     }
+    else{ 
+      upgradeButton.title = "rate is multiplied by " +item.rate;
+      if (item.name == "😝") {
+        upgradeButton.textContent = `${item.description}, ${item.name} (2 x 😀/second) - ${item.cost} 😀`;
+
+      } else if (item.name == "😎") {
+        upgradeButton.textContent = `${item.description}, ${item.name} (4 x 😀/second) - ${item.cost} 😀`;
+
+      }
+  }
     upgradeButton.style.display = "block";
     upgradeButton.style.margin = "10px auto";
     upgradeButton.style.padding = "10px 20px";
-
- 
 
     // used for using custom cursor
     upgradeButton.style.cursor = `url('${customCursor}'),  auto`;
@@ -268,9 +265,8 @@ function createUpgradeButtons() {
     upgradeButton.style.fontSize = "16px";
     upgradeButton.disabled = true;
 
-
     //adds description for buttons when hovering over them
-    upgradeButton.title = "rate increases by: " + item.rate;
+      //upgradeButton.title = "rate increases by: " + item.rate;
 
     // Add event listener for the upgrade button
     upgradeButton.addEventListener("click", () =>
@@ -286,7 +282,7 @@ function createUpgradeButtons() {
     // Appends amount and upgradeButton to the itemContainer
     itemContainer.appendChild(amountDiv);
     itemContainer.appendChild(upgradeButton);
-    upgradeContainer.appendChild(itemContainer);//itemContainer appended to upgrade Container
+    upgradeContainer.appendChild(itemContainer); //itemContainer appended to upgrade Container
 
     // Store reference to the button for later updates
     item.buttonElement = upgradeButton;
