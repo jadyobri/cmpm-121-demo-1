@@ -2,6 +2,7 @@ import "./style.css";
 //found on https://icons8.com/icons/set/cursor--yellow
 import customCursor from "./cursors/CursorHand.png";
 
+
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Clicking Combo";
@@ -82,94 +83,55 @@ const availableItems: Item[] = [
     description: "Too Cool",
   },
 ];
+// Create a container for the smile counter and smiles per second display
+ const smileContainer = document.createElement("div");
+ smileContainer.style.display = "flex !important";
+ console.log("Display property (smileContainer):", smileContainer.style.display);
+ smileContainer.style.flexDirection = "column";
+ smileContainer.style.alignItems = "center";
+ smileContainer.style.justifyContent = "center";
+ smileContainer.style.width = "300px";
+ smileContainer.style.border = "2px solid #ddd";
+ smileContainer.style.padding = "10px";
+ smileContainer.style.margin = "20px auto";
+ smileContainer.style.backgroundColor = "#f9f9f9";
+ smileContainer.style.boxShadow = "0px 0px 5px rgba(0, 0, 0, 0.2)"; // Optional: add subtle shadow for depth
+ smileContainer.style.top = "70%";
+ smileContainer.style.left = "70%";
+ smileContainer.style.transform = "translate(140%, 280%)";//used for positioning correctly
 
+//Makes text for smiles count
 const counterDiv = document.createElement("div");
 counterDiv.textContent = `${counter} 😀`;
-counterDiv.style.position = "absolute";
-counterDiv.style.top = "90%";
-counterDiv.style.left = "50%";
-counterDiv.style.transform = "translate(-50%, -50%)";
 counterDiv.style.fontSize = "20px";
-counterDiv.style.margin = "20px";
+counterDiv.style.marginBottom = "10px";
 counterDiv.style.textAlign = "center";
+counterDiv.style.display = "static";
+smileContainer.appendChild(counterDiv);//adds to container
 
+//Makes text for smiles per second
 const speedCount = document.createElement("div");
-speedCount.textContent = `${increaseSpeed} 😀/second`;
-speedCount.style.position = "absolute";
-speedCount.style.top = "30%";
-speedCount.style.left = "50%";
-speedCount.style.transform = "translate(-50%, -50%)";
-speedCount.style.fontSize = "20px";
-speedCount.style.margin = "20px";
+speedCount.textContent = `${increaseSpeed.toFixed(1)} 😀/second`;
+speedCount.style.fontSize = "18px";
 speedCount.style.textAlign = "center";
+speedCount.style.display = "static";
 
-const upgradefirst = document.createElement("div");
-upgradefirst.textContent = `0 😄`;
-upgradefirst.style.position = "absolute";
-upgradefirst.style.top = "3%";
-upgradefirst.style.left = "93%";
-upgradefirst.style.transform = "translate(-50%, -50%)";
-upgradefirst.style.fontSize = "20px";
-upgradefirst.style.margin = "20px";
-upgradefirst.style.textAlign = "center";
 
-//makes 😁 button for upgrade
-const upgradesecond = document.createElement("div");
-upgradesecond.textContent = `0 😁`;
-upgradesecond.style.position = "absolute";
-upgradesecond.style.top = "7%";
-upgradesecond.style.left = "93%";
-upgradesecond.style.transform = "translate(-50%, -50%)";
-upgradesecond.style.fontSize = "20px";
-upgradesecond.style.margin = "20px";
-upgradesecond.style.textAlign = "center";
+smileContainer.appendChild(speedCount);//adds to container
 
-const upgradethird = document.createElement("div");
-upgradethird.textContent = `0 😂`;
-upgradethird.style.position = "absolute";
-upgradethird.style.top = "11%";
-upgradethird.style.left = "93%";
-upgradethird.style.transform = "translate(-50%, -50%)";
-upgradethird.style.fontSize = "20px";
-upgradethird.style.margin = "20px";
-upgradethird.style.textAlign = "center";
 
-const upgradefourth = document.createElement("div");
-upgradefourth.textContent = `0 😝`;
-upgradefourth.style.position = "absolute";
-upgradefourth.style.top = "15%";
-upgradefourth.style.left = "93%";
-upgradefourth.style.transform = "translate(-50%, -50%)";
-upgradefourth.style.fontSize = "20px";
-upgradefourth.style.margin = "20px";
-upgradefourth.style.textAlign = "center";
+app.appendChild(smileContainer);
 
-const upgradefifth = document.createElement("div");
-upgradefifth.textContent = `0 😎`;
-upgradefifth.style.position = "absolute";
-upgradefifth.style.top = "19%";
-upgradefifth.style.left = "93%";
-upgradefifth.style.transform = "translate(-50%, -50%)";
-upgradefifth.style.fontSize = "20px";
-upgradefifth.style.margin = "20px";
-upgradefifth.style.textAlign = "center";
 
-document.body.appendChild(counterDiv);
-document.body.appendChild(upgradefirst);
-document.body.appendChild(upgradesecond);
-document.body.appendChild(upgradethird);
-document.body.appendChild(upgradefourth);
-document.body.appendChild(upgradefifth);
-document.body.appendChild(speedCount);
 function updateCounter() {
-  counterDiv.textContent = `${counter} 😀`;
+  counterDiv.textContent = `${counter.toFixed(2)} 😀`;
 }
 button.style.backgroundImage = "url('https://emojicdn.elk.sh/%F0%9F%98%83')";
 button.style.backgroundSize = "cover";
 button.style.position = "absolute";
 button.style.backgroundPosition = "center";
-button.style.width = "75px";
-button.style.height = "75px";
+button.style.width = "200px";
+button.style.height = "200px";
 button.style.borderRadius = "50%";
 button.style.border = "5px solid #FFD700"; // Darker brown border
 button.style.backgroundColor = "#f4a460"; // Light brown background
@@ -197,12 +159,26 @@ function buyUpgrade(item: Item, button: HTMLButtonElement) {
     item.amount++;
     item.cost = calculateNewCost(item.cost);
 
+
     // Update UI displays
-    if (item.amountDisplay)
+    if (item.amountDisplay){
       item.amountDisplay.textContent = `${item.amount} ${item.name}`;
+      item.amountDisplay.classList.add("upgrade-increase");
+
+      // Remove animation class after the animation duration to allow re-trigger
+      setTimeout(() => {
+        if(item.amountDisplay) item.amountDisplay.classList.remove("upgrade-increase");
+      }, 500); // Match the animation duration
+
+    }
     updateCounter();
     updateUpgradeButtons();
     updateButtonLabel(button, item);
+
+
+
+    // Remove the animation class after the animation duration (e.g., 0.5s)
+
   }
 }
 
@@ -234,16 +210,43 @@ function updateIncreaseSpeed(item: Item) {
   speedCount.textContent = `${increaseSpeed.toFixed(1)} 😀/second`;
 }
 
+
+// Create a fixed container for upgrade amounts in the top right
+const upgradeAmountsContainer = document.createElement("div");
+upgradeAmountsContainer.style.position = "fixed";
+upgradeAmountsContainer.style.top = "10px";
+upgradeAmountsContainer.style.right = "10px";
+upgradeAmountsContainer.style.display = "flex";
+upgradeAmountsContainer.style.flexDirection = "column";
+upgradeAmountsContainer.style.alignItems = "flex-end"; // Align text to the right
+upgradeAmountsContainer.style.gap = "5px"; // Add space between items
+app.appendChild(upgradeAmountsContainer);
+
+const upgradeContainer = document.createElement("div");
+upgradeContainer.style.display = "flex";
+upgradeContainer.style.flexDirection = "column";
+upgradeContainer.style.alignItems = "center";
+upgradeContainer.style.gap = "10px";
+app.appendChild(upgradeContainer);
+
+
 //creates each upgrade button itself
 function createUpgradeButtons() {
   availableItems.forEach((item) => {
+
+    //make container to hold item data.
     const itemContainer = document.createElement("div");
     itemContainer.style.position = "relative"; // Relative positioning for absolute placement of the counter
-    itemContainer.style.textAlign = "center"; // Center the button in the container
-    itemContainer.style.marginBottom = "20px"; // Add space between different items
-    itemContainer.style.width = "250px"; // Set a fixed width for the container
-    itemContainer.style.margin = "0 auto"; // Center the container
-    itemContainer.style.border = "1px solid #ddd"; // Add border around the container
+    itemContainer.style.display = "flex";
+    itemContainer.style.alignItems = "center";
+    itemContainer.style.justifyContent = "space-between";
+    itemContainer.style.width = "450px";
+    itemContainer.style.border = "1px solid #ddd";
+    itemContainer.style.padding = "10px";
+    itemContainer.style.left = "-40%";
+    itemContainer.style.transform = "translate(-50%, 0%)";
+
+
 
     const upgradeButton = document.createElement("button");
     if (item.name != "😝" && item.name != "😎") {
@@ -257,12 +260,14 @@ function createUpgradeButtons() {
     upgradeButton.style.margin = "10px auto";
     upgradeButton.style.padding = "10px 20px";
 
-    //used to help make description part work
-    //upgradeButton.style.cursor = "pointer";
+ 
+
+    // used for using custom cursor
     upgradeButton.style.cursor = `url('${customCursor}'),  auto`;
 
     upgradeButton.style.fontSize = "16px";
     upgradeButton.disabled = true;
+
 
     //adds description for buttons when hovering over them
     upgradeButton.title = "rate increases by: " + item.rate;
@@ -272,10 +277,19 @@ function createUpgradeButtons() {
       buyUpgrade(item, upgradeButton),
     );
 
-    // Append the upgrade button to the body
-    document.body.appendChild(upgradeButton);
+    //adding amount to the container area with buttons
+    const amountDiv = document.createElement("div");
+    amountDiv.textContent = `${item.amount} ${item.name}`;
+    amountDiv.style.fontSize = "16px";
+    item.amountDisplay = amountDiv;
+    upgradeAmountsContainer.appendChild(amountDiv);
+    // Appends amount and upgradeButton to the itemContainer
+    itemContainer.appendChild(amountDiv);
+    itemContainer.appendChild(upgradeButton);
+    upgradeContainer.appendChild(itemContainer);//itemContainer appended to upgrade Container
 
     // Store reference to the button for later updates
+    item.buttonElement = upgradeButton;
     itemButtonMap.set(item.name, upgradeButton);
   });
 }
@@ -293,7 +307,7 @@ const itemButtonMap = new Map<string, HTMLButtonElement>();
 
 //Changes positioning
 button.style.position = "absolute";
-button.style.top = "60%";
+button.style.top = "50%";
 button.style.left = "50%";
 button.style.transform = "translate(-50%, -50%)";
 button.style.padding = "10px 20px"; // Optional: make the button look better
