@@ -13,7 +13,11 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
+/* Set a default cursor for the entire page*/
+/* Found on https://icons8.com/icons/set/cursor--yellow */
+body {
+  cursor: url("./cursors/CursorPoint.png"), auto;
+}
 a {
   font-weight: 500;
   color: #646cff;

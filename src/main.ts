@@ -1,10 +1,11 @@
 import "./style.css";
+//found on https://icons8.com/icons/set/cursor--yellow
+import customCursor from "./cursors/CursorHand.png";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Clicking Combo";
 document.title = gameName;
-
 const header = document.createElement("h1");
 header.innerHTML = gameName;
 header.style.position = "absolute";
@@ -175,7 +176,7 @@ button.style.backgroundColor = "#f4a460"; // Light brown background
 button.style.fontSize = "100px"; // Big emoji text
 button.style.lineHeight = "150px"; // Align the emoji vertically
 button.style.textAlign = "center";
-button.style.cursor = "pointer";
+button.style.cursor = `url('${customCursor}'),  auto`;
 button.style.margin = "20px auto";
 button.style.display = "block";
 button.style.padding = "0";
@@ -255,11 +256,17 @@ function createUpgradeButtons() {
     upgradeButton.style.display = "block";
     upgradeButton.style.margin = "10px auto";
     upgradeButton.style.padding = "10px 20px";
-    upgradeButton.style.cursor = "pointer";
+
+    //used to help make description part work
+    //upgradeButton.style.cursor = "pointer";
+    upgradeButton.style.cursor = `url('${customCursor}'),  auto`;
+
     upgradeButton.style.fontSize = "16px";
     upgradeButton.disabled = true;
 
+    //adds description for buttons when hovering over them
     upgradeButton.title = "rate increases by: " + item.rate;
+
     // Add event listener for the upgrade button
     upgradeButton.addEventListener("click", () =>
       buyUpgrade(item, upgradeButton),
